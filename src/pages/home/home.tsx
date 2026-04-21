@@ -1,9 +1,19 @@
 // pages/Home.tsx
-
 import { useAuth } from "../../contexts/auth-context";
+import { useNavigate } from "react-router-dom";
+import { useTokenTimer } from "../../hooks/useTokenTimer";
 
 export function Home() {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+    const { timeLeft, formatTime } = useTokenTimer(900); 
+
+    const handleLogout = async () => {
+        if (user?.id) {
+            await logout(user.id);
+            navigate('/');
+        }
+    };
 
     return (
         <div className="container mt-5">
@@ -15,12 +25,26 @@ export function Home() {
                     </div>
 
                     {user ? (
-                        // ✅ Usuario logueado
                         <div className="card shadow">
-                            <div className="card-header bg-primary text-white">
+                            <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                                 <h5 className="mb-0">👤 Panel de Usuario</h5>
+                                <button 
+                                    onClick={handleLogout} 
+                                    className="btn btn-danger btn-sm"
+                                >
+                                    🚪 Cerrar sesión
+                                </button>
                             </div>
                             <div className="card-body">
+                                <div className="alert alert-warning text-center">
+                                    <strong>⏱️ Token expira en:</strong> {formatTime(timeLeft)}
+                                    {timeLeft <= 10 && timeLeft > 0 && (
+                                        <div className="text-danger mt-1">
+                                            ⚠️ ¡Sesión a punto de expirar!
+                                        </div>
+                                    )}
+                                </div>
+
                                 <div className="row">
                                     <div className="col-md-6">
                                         <p><strong>📛 Nombre:</strong> {user.name}</p>
@@ -43,7 +67,6 @@ export function Home() {
                             </div>
                         </div>
                     ) : (
-                        // ❌ Visitante (no logueado)
                         <div className="card shadow">
                             <div className="card-header bg-secondary text-white">
                                 <h5 className="mb-0">🌍 Modo Visitante</h5>

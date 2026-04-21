@@ -10,9 +10,10 @@ interface AuthContextProps {
     error: string | null;
     login: (email: string, password: string) => Promise<void>;
     register: (name: string, email: string, password: string) => Promise<void>;
-    logout: () => void;
+    logout: (userId: string,) => void;
     clearError: () => void;
     setUser: (user: User | null) => void;
+    getCompleteUser: () => Promise<User | null>; // ✅ Nuevo método
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -37,11 +38,10 @@ function useAuthReducer() {
 
             dispatch({
                 type: AUTH_ACTION_TYPES.LOGIN_SUCCESS,
-                payload: user
+                payload: user,
+                token: token
             });
 
-            localStorage.setItem('token', token);
-            localStorage.setItem('user', JSON.stringify(user));
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         } catch (error: any) {
@@ -55,7 +55,7 @@ function useAuthReducer() {
     const register = async (name: string, email: string, password: string) => {
         dispatch({ type: AUTH_ACTION_TYPES.REGISTER_START });
         try {
-            await api.post('/users/register', { name, email, password });
+            await api.post('/users', { name, email, password });
             await login(email, password);
         } catch (error: any) {
             dispatch({
@@ -65,9 +65,15 @@ function useAuthReducer() {
         }
     };
 
-    const logout = () => {
-        dispatch({ type: AUTH_ACTION_TYPES.LOGOUT });
-        delete api.defaults.headers.common['Authorization'];
+    const logout = async (userId: string) => {
+        try {
+            if (userId) {
+                await api.post('/users/logout', { userId });
+            }
+        } finally {
+            dispatch({ type: AUTH_ACTION_TYPES.LOGOUT });
+            delete api.defaults.headers.common['Authorization'];
+        }
     };
 
     const clearError = () => {
@@ -78,11 +84,32 @@ function useAuthReducer() {
         dispatch({ type: AUTH_ACTION_TYPES.SET_USER, payload: user });
     };
 
-    return { state, login, register, logout, clearError, setUser };
+    const getCompleteUser = async (): Promise<User | null> => {
+        const userId = state.user?.id;
+        
+        if (!userId) {
+            return null;
+        }
+
+        try {
+            const response = await api.get(`/users/${userId}`);
+            const completeUser = response.data;
+            
+            // Actualizar el estado con el usuario completo
+            dispatch({ type: AUTH_ACTION_TYPES.SET_USER, payload: completeUser });
+            
+            return completeUser;
+        } catch (error: any) {
+            console.error('Error obteniendo usuario completo:', error);
+            return null;
+        }
+    };
+
+    return { state, login, register, logout, clearError, setUser, getCompleteUser };
 }
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const { state, login, register, logout, clearError, setUser } = useAuthReducer();
+    const { state, login, register, logout, clearError, setUser, getCompleteUser } = useAuthReducer();
 
     if (state.token) {
         api.defaults.headers.common['Authorization'] = `Bearer ${state.token}`;
@@ -100,6 +127,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 logout,
                 clearError,
                 setUser,
+                getCompleteUser, 
             }}
         >
             {children}

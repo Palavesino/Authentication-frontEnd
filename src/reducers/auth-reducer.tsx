@@ -24,6 +24,7 @@ export const AUTH_ACTION_TYPES = {
 interface AuthAction {
     type: string;
     payload?: User | string | null;
+    token?: string ;
     error?: string;
 }
 
@@ -38,7 +39,7 @@ export const updateLocalStorage = (state: AuthState) => {
 };
 
 export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
-    const { type, payload, error } = action;
+    const { type, payload, error , token } = action;
 
     switch (type) {
         case AUTH_ACTION_TYPES.LOGIN_START:
@@ -56,7 +57,7 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
                 ...state,
                 isLoading: false,
                 user,
-                token: user ? state.token : null,
+                token: token ? token : null,
                 error: null,
             };
             updateLocalStorage(newState);
