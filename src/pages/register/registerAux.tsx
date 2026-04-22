@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth-context';
 import './register.css';
 
-function Register() {
+function RegisterAux() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -286,4 +286,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default RegisterAux;

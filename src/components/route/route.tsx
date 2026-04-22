@@ -6,6 +6,7 @@ import { Home } from "../../pages/home/home";
 import { Login } from "../../pages/login/login";
 import Register from "../../pages/register/register";
 import { Profile } from "../../pages/profile/profile";
+import RegisterAux from "../../pages/register/registerAux";
 
 const Router = () => {
     const { user } = useAuth();
@@ -17,6 +18,7 @@ const Router = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/aux" element={<RegisterAux />} />
             </Routes>
         </Suspense>
     );
