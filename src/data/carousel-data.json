@@ -1,0 +1,49 @@
+{
+    "slides": [
+        {
+            "id": 1,
+            "title": "Bienvenido a MiApp",
+            "subtitle": "La plataforma que necesitas para crecer",
+            "description": "Descubre todas las herramientas que tenemos para ti",
+            "imageUrl": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=600&fit=crop",
+            "buttonText": "Comenzar",
+            "buttonLink": "/register"
+        },
+        {
+            "id": 2,
+            "title": "Tecnología Innovadora",
+            "subtitle": "Soluciones de vanguardia",
+            "description": "Utilizamos las últimas tecnologías para ofrecerte lo mejor",
+            "imageUrl": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=600&fit=crop",
+            "buttonText": "Saber más",
+            "buttonLink": "#"
+        },
+        {
+            "id": 3,
+            "title": "Soporte 24/7",
+            "subtitle": "Siempre estamos para ayudarte",
+            "description": "Nuestro equipo de soporte está disponible todo el día",
+            "imageUrl": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=600&fit=crop",
+            "buttonText": "Contactar",
+            "buttonLink": "#"
+        },
+        {
+            "id": 4,
+            "title": "Seguridad Garantizada",
+            "subtitle": "Tus datos están seguros",
+            "description": "Protegemos tu información con los más altos estándares",
+            "imageUrl": "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=1200&h=600&fit=crop",
+            "buttonText": "Más información",
+            "buttonLink": "#"
+        },
+        {
+            "id": 5,
+            "title": "Únete a nuestra comunidad",
+            "subtitle": "Miles de usuarios ya confían en nosotros",
+            "description": "Forma parte de esta gran familia",
+            "imageUrl": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=600&fit=crop",
+            "buttonText": "Regístrate ahora",
+            "buttonLink": "#"
+        }
+    ]
+}

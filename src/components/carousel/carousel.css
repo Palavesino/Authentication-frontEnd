@@ -1,0 +1,267 @@
+.custom-carousel {
+    position: relative;
+    height: 80vh;
+    overflow: hidden;
+}
+
+.carousel-image-wrapper {
+    position: relative;
+    height: 80vh;
+    overflow: hidden;
+}
+
+.carousel-image {
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform 6s ease;
+}
+
+.custom-carousel .carousel-item.active .carousel-image {
+    transform: scale(1.1);
+}
+
+.carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+            rgba(0, 0, 0, 0.6) 0%,
+            rgba(0, 0, 0, 0.4) 50%,
+            rgba(0, 0, 0, 0.3) 100%);
+    z-index: 1;
+}
+
+/* Caption centrado con más espacio */
+.carousel-caption-custom {
+    position: absolute;
+    margin-left: 3rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    text-align: center;
+    width: 90%;           /* Aumentado de 85% a 90% */
+    max-width: 1000px;    /* Aumentado de 900px a 1000px */
+    padding: 0 60px;      /* Aumentado de 40px a 60px */
+    background: transparent;
+}
+.carousel-content {
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.carousel-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    word-break: break-word;
+    line-height: 1.2;
+}
+
+.carousel-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-description {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.carousel-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border: none;
+}
+
+.carousel-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    color: white;
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.btn-icon {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+}
+
+.carousel-btn:hover .btn-icon {
+    transform: translateX(5px);
+}
+
+/* Estilos para los indicadores */
+.custom-carousel .carousel-indicators {
+    bottom: 30px;
+    z-index: 2;
+}
+
+.custom-carousel .carousel-indicators button {
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+}
+
+.custom-carousel .carousel-indicators button.active {
+    background-color: #667eea;
+    width: 60px;
+}
+
+/* Estilos para los controles */
+.custom-carousel .carousel-control-prev,
+.custom-carousel .carousel-control-next {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.custom-carousel:hover .carousel-control-prev,
+.custom-carousel:hover .carousel-control-next {
+    opacity: 1;
+}
+
+.custom-carousel .carousel-control-prev {
+    left: 20px;
+}
+
+.custom-carousel .carousel-control-next {
+    right: 20px;
+}
+
+.custom-carousel .carousel-control-prev-icon,
+.custom-carousel .carousel-control-next-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Loading state */
+.carousel-loading {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .carousel-caption-custom {
+        width: 90%;
+        padding: 0 30px;
+    }
+
+    .carousel-title {
+        font-size: 2.5rem;
+    }
+
+    .carousel-subtitle {
+        font-size: 1.3rem;
+    }
+
+    .carousel-description {
+        font-size: 1rem;
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .carousel-title {
+        font-size: 1.3rem;
+        word-break: break-word;  
+    }
+    .custom-carousel,
+    .carousel-image-wrapper {
+        height: 60vh;
+    }
+
+    .carousel-caption-custom {
+        width: 95%;
+        padding: 0 20px;
+    }
+
+
+    .carousel-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .carousel-description {
+        font-size: 0.9rem;
+        display: none;
+        /* Ocultar descripción en móviles para más espacio */
+    }
+
+    .carousel-btn {
+        padding: 8px 20px;
+        font-size: 0.9rem;
+    }
+
+    .custom-carousel .carousel-control-prev,
+    .custom-carousel .carousel-control-next {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-title {
+        font-size: 1.5rem;
+    }
+
+    .carousel-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .carousel-caption-custom {
+        padding: 0 15px;
+    }
+
+    .custom-carousel .carousel-indicators button {
+        width: 25px;
+    }
+
+    .custom-carousel .carousel-indicators button.active {
+        width: 40px;
+    }
+}

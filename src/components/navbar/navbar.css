@@ -1,0 +1,61 @@
+.custom-navbar {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.custom-navbar .navbar-brand {
+    transition: transform 0.3s ease;
+}
+
+.custom-navbar .navbar-brand:hover {
+    transform: scale(1.05);
+}
+
+.custom-navbar .nav-link {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.custom-navbar .nav-link:not(.btn):hover {
+    transform: translateY(-2px);
+}
+
+.custom-navbar .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.custom-navbar .nav-link:hover::after {
+    width: 80%;
+}
+
+.dropdown-menu {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-item:active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+@media (max-width: 768px) {
+    .custom-navbar .nav-link::after {
+        display: none;
+    }
+}
