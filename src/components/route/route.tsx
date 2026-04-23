@@ -1,7 +1,6 @@
 // components/route/route.tsx
 import { Suspense } from "react";
 import { Routes, Route } from "react-router-dom"; 
-import { useAuth } from "../../contexts/auth-context";
 import { Home } from "../../pages/home/home";
 import { Login } from "../../pages/login/login";
 import Register from "../../pages/register/register";
@@ -9,7 +8,6 @@ import { HomeAux } from "../../pages/home/homeAux";
 import Profile from "../../pages/profile/profile";
 
 const Router = () => {
-    const { user } = useAuth();
 
     return (
         <Suspense fallback={<h1>Loading...</h1>}>
