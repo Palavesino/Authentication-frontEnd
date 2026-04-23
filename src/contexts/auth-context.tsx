@@ -1,7 +1,7 @@
 import React, { useContext, createContext, type ReactNode, useReducer } from 'react';
 import { authReducer, initialState, AUTH_ACTION_TYPES } from '../reducers/auth-reducer';
 import { api } from '../services/api';
-import type { User } from '../interface/user';
+import type { User, UserComplete } from '../interface/user';
 
 interface AuthContextProps {
     user: User | null;
@@ -12,8 +12,8 @@ interface AuthContextProps {
     register: (name: string, email: string, password: string) => Promise<void>;
     logout: (userId: string,) => void;
     clearError: () => void;
-    setUser: (user: User | null) => void;
-    getCompleteUser: () => Promise<User | null>; // ✅ Nuevo método
+    setUser: (user: User | UserComplete|null) => void;
+    getCompleteUser: () => Promise<UserComplete | null>; // ✅ Nuevo método
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -80,9 +80,23 @@ function useAuthReducer() {
         dispatch({ type: AUTH_ACTION_TYPES.CLEAR_ERROR });
     };
 
-    const setUser = (user: User | null) => {
+    const setUser = async (user: User | UserComplete | null) => {
+    try {
+        if (user?.id) {
+            const { id, rol, ...updateData } = user;
+            
+            await api.put(`/users/${id}`, updateData);
+        }
+    } catch (error: any) {
+        console.error('Error al actualizar usuario:', error);
+        dispatch({ 
+            type: AUTH_ACTION_TYPES.UPDATE_FAILURE, 
+            error: error.response?.data?.message || 'Error al actualizar usuario'
+        });
+    } finally {
         dispatch({ type: AUTH_ACTION_TYPES.SET_USER, payload: user });
-    };
+    }
+};
 
     const getCompleteUser = async (): Promise<User | null> => {
         const userId = state.user?.id;

@@ -16,6 +16,7 @@ export const AUTH_ACTION_TYPES = {
     REGISTER_START: 'REGISTER_START',
     REGISTER_SUCCESS: 'REGISTER_SUCCESS',
     REGISTER_FAILURE: 'REGISTER_FAILURE',
+    UPDATE_FAILURE: 'UPDATE_FAILURE',
     LOGOUT: 'LOGOUT',
     SET_USER: 'SET_USER',
     CLEAR_ERROR: 'CLEAR_ERROR',
@@ -66,6 +67,7 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
 
         case AUTH_ACTION_TYPES.LOGIN_FAILURE:
         case AUTH_ACTION_TYPES.REGISTER_FAILURE:
+        case AUTH_ACTION_TYPES.UPDATE_FAILURE:
             return {
                 ...state,
                 isLoading: false,

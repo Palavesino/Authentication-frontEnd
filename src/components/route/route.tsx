@@ -5,8 +5,8 @@ import { useAuth } from "../../contexts/auth-context";
 import { Home } from "../../pages/home/home";
 import { Login } from "../../pages/login/login";
 import Register from "../../pages/register/register";
-import { Profile } from "../../pages/profile/profile";
 import { HomeAux } from "../../pages/home/homeAux";
+import Profile from "../../pages/profile/profile";
 
 const Router = () => {
     const { user } = useAuth();
