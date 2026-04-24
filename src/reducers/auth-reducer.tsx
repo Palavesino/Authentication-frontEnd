@@ -1,6 +1,6 @@
 
 import type { AuthState } from "../interface/auth";
-import type { User } from "../interface/user";
+import type { User, UserComplete } from "../interface/user";
 
 export const initialState: AuthState = {
     user: JSON.parse(window.localStorage.getItem('user') || 'null'),
@@ -24,7 +24,7 @@ export const AUTH_ACTION_TYPES = {
 
 interface AuthAction {
     type: string;
-    payload?: User | string | null;
+    payload?: User | UserComplete | null;
     token?: string ;
     error?: string;
 }

@@ -8,12 +8,16 @@ interface AuthContextProps {
     token: string | null;
     isLoading: boolean;
     error: string | null;
+    users: User[];
     login: (email: string, password: string) => Promise<void>;
     register: (name: string, email: string, password: string) => Promise<void>;
     logout: (userId: string,) => void;
     clearError: () => void;
-    setUser: (user: User | UserComplete|null) => void;
-    getCompleteUser: () => Promise<UserComplete | null>; // ✅ Nuevo método
+    setUser: (user: User | UserComplete | null) => void;
+    getCompleteUser: () => Promise<UserComplete | null>;
+    getAllUsers: () => Promise<User[] | null>;
+    updateUserRol: (userId: string, rol: string) => Promise<User | null>;
+    updateUserBlocked: (userId: string, blocked: boolean) => Promise<User | null>;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -81,26 +85,25 @@ function useAuthReducer() {
     };
 
     const setUser = async (user: User | UserComplete | null) => {
-    try {
-        if (user?.id) {
-            const { id, rol, ...updateData } = user;
-            
-            await api.put(`/users/${id}`, updateData);
+        try {
+            if (user?.id) {
+                const { id, rol, ...updateData } = user;
+                await api.put(`/users/${id}`, updateData);
+            }
+        } catch (error: any) {
+            console.error('Error al actualizar usuario:', error);
+            dispatch({
+                type: AUTH_ACTION_TYPES.UPDATE_FAILURE,
+                error: error.response?.data?.message || 'Error al actualizar usuario'
+            });
+        } finally {
+            dispatch({ type: AUTH_ACTION_TYPES.SET_USER, payload: user });
         }
-    } catch (error: any) {
-        console.error('Error al actualizar usuario:', error);
-        dispatch({ 
-            type: AUTH_ACTION_TYPES.UPDATE_FAILURE, 
-            error: error.response?.data?.message || 'Error al actualizar usuario'
-        });
-    } finally {
-        dispatch({ type: AUTH_ACTION_TYPES.SET_USER, payload: user });
-    }
-};
+    };
 
-    const getCompleteUser = async (): Promise<User | null> => {
+    const getCompleteUser = async (): Promise<UserComplete | null> => {
         const userId = state.user?.id;
-        
+
         if (!userId) {
             return null;
         }
@@ -108,10 +111,9 @@ function useAuthReducer() {
         try {
             const response = await api.get(`/users/${userId}`);
             const completeUser = response.data;
-            
-            // Actualizar el estado con el usuario completo
+
             dispatch({ type: AUTH_ACTION_TYPES.SET_USER, payload: completeUser });
-            
+
             return completeUser;
         } catch (error: any) {
             console.error('Error obteniendo usuario completo:', error);
@@ -119,11 +121,63 @@ function useAuthReducer() {
         }
     };
 
-    return { state, login, register, logout, clearError, setUser, getCompleteUser };
+    const getAllUsers = async (): Promise<User[] | null> => {
+
+        try {
+            const response = await api.get('/users');
+            return response.data;
+        } catch (error: any) {
+            console.error('Error obteniendo usuarios:', error);
+            return null;
+        }
+    };
+    const updateUserRol = async (userId: string, rol: string): Promise<User | null> => {
+
+        try {
+            const response = await api.patch(`/users/${userId}/rol`, { rol });
+            const updatedUser = response.data;
+            if (state.user?.id === userId) {
+                dispatch({ type: AUTH_ACTION_TYPES.SET_USER, payload: updatedUser });
+            }
+            return updatedUser;
+        } catch (error: any) {
+            console.error('Error actualizando rol:', error);
+            return null;
+        }
+    };
+
+    const updateUserBlocked = async (userId: string, blocked: boolean): Promise<User | null> => {
+
+        try {
+            const response = await api.patch(`/users/${userId}/blocked`, { blocked });
+            const updatedUser = response.data;
+            if (state.user?.id === userId) {
+                dispatch({ type: AUTH_ACTION_TYPES.SET_USER, payload: updatedUser });
+            }
+            return updatedUser;
+        } catch (error: any) {
+            console.error('Error actualizando estado bloqueado:', error);
+            return null;
+        }
+    };
+
+    return {
+        state,
+        login,
+        register,
+        logout,
+        clearError,
+        setUser,
+        getCompleteUser,
+        getAllUsers,
+        updateUserBlocked,
+        updateUserRol
+
+    };
 }
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const { state, login, register, logout, clearError, setUser, getCompleteUser } = useAuthReducer();
+    const { state, login, register, logout, clearError, setUser, getCompleteUser, getAllUsers, updateUserRol, updateUserBlocked } = useAuthReducer();
 
     if (state.token) {
         api.defaults.headers.common['Authorization'] = `Bearer ${state.token}`;
@@ -136,12 +190,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 token: state.token,
                 isLoading: state.isLoading,
                 error: state.error,
+                users: [],
                 login,
                 register,
                 logout,
                 clearError,
                 setUser,
-                getCompleteUser, 
+                getCompleteUser,
+                getAllUsers,
+                updateUserRol,
+                updateUserBlocked
             }}
         >
             {children}

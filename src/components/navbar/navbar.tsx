@@ -2,6 +2,7 @@ import { Container, Nav, Navbar as BootstrapNavbar, NavDropdown } from 'react-bo
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth-context';
 import './navbar.css';
+import { Rol } from '../../enum/rol';
 
 function Navbar() {
     const { user, logout, isLoading } = useAuth();
@@ -14,6 +15,8 @@ function Navbar() {
         }
     };
 
+    // Verificar si el usuario es admin
+    const isAdmin = user?.rol === Rol.ADMIN;
 
     return (
         <BootstrapNavbar bg="dark" variant="dark" expand="lg" sticky="top" className="custom-navbar">
@@ -53,6 +56,20 @@ function Navbar() {
                                     id="user-dropdown"
                                     align="end"
                                 >
+                                    {/* Opción de Lista de Usuarios - Solo para admin */}
+                                    {isAdmin && (
+                                        <>
+                                            <NavDropdown.Item as={Link} to="/users">
+                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" className="me-2">
+                                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                                    <path d="M17 9l-1.41 1.41L17.17 12H14v2h3.17l-1.58 1.59L17 17l4-4z" />
+                                                </svg>
+                                                Lista de Usuarios
+                                            </NavDropdown.Item>
+                                            <NavDropdown.Divider />
+                                        </>
+                                    )}
+
                                     <NavDropdown.Item as={Link} to="/profile">
                                         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" className="me-2">
                                             <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />

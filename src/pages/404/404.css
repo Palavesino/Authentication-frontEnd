@@ -1,0 +1,137 @@
+.not-found-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+}
+
+.not-found-card {
+    background: white;
+    border-radius: 30px;
+    padding: 60px 40px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.not-found-icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.not-found-icon svg {
+    width: 50px;
+    height: 50px;
+    color: white;
+}
+
+.not-found-code {
+    font-size: 6rem;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(102, 126, 234, 0.2);
+}
+
+.not-found-title {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.not-found-message {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 30px;
+}
+
+.not-found-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.not-found-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.not-found-actions .btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+.not-found-actions .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.not-found-actions .btn-outline-primary {
+    border: 2px solid #667eea;
+    color: #667eea;
+}
+
+.not-found-actions .btn-outline-primary:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-3px);
+}
+
+@media (max-width: 768px) {
+    .not-found-card {
+        padding: 40px 25px;
+    }
+    
+    .not-found-code {
+        font-size: 4rem;
+    }
+    
+    .not-found-title {
+        font-size: 1.5rem;
+    }
+    
+    .not-found-icon {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .not-found-icon svg {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .not-found-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .not-found-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
