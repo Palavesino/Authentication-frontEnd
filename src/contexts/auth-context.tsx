@@ -9,7 +9,7 @@ interface AuthContextProps {
     isLoading: boolean;
     error: string | null;
     users: User[];
-    login: (email: string, password: string) => Promise<void>;
+    login: (email: string, password: string) => Promise<boolean>;
     register: (name: string, email: string, password: string) => Promise<void>;
     logout: (userId: string,) => void;
     clearError: () => void;
@@ -34,7 +34,7 @@ export function useAuth() {
 function useAuthReducer() {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
-    const login = async (email: string, password: string) => {
+    const login = async (email: string, password: string): Promise<boolean> => {
         dispatch({ type: AUTH_ACTION_TYPES.LOGIN_START });
         try {
             const response = await api.post('/users/login', { email, password });
@@ -48,11 +48,13 @@ function useAuthReducer() {
 
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
+            return true;
         } catch (error: any) {
             dispatch({
                 type: AUTH_ACTION_TYPES.LOGIN_FAILURE,
                 error: error.response?.data?.message || 'Error al iniciar sesión'
             });
+            return false;
         }
     };
 

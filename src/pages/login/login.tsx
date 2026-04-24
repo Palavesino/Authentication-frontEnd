@@ -59,8 +59,10 @@ function Login() {
     if (!validateForm()) {
       return;
     }
-    await login(email, password);
-    navigate('/');
+    const success = await login(email, password);
+    if (success) {
+      navigate('/');
+    }
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
