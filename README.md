@@ -1,73 +1,121 @@
-# React + TypeScript + Vite
+# Authentication Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend desarrollado con **React + TypeScript + Vite** que sirve como interfaz de usuario para el sistema de autenticación y gestión de usuarios.
 
-Currently, two official plugins are available:
+## 🚀 Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+[https://authentication-front-end.vercel.app/](https://authentication-front-end.vercel.app/)
 
-## React Compiler
+## 📋 Características
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🔐 Autenticación
+- Login con validación de campos
+- Registro de nuevos usuarios
+- Cierre de sesión
+- Protección de rutas por rol
+- Persistencia de sesión con JWT
 
-## Expanding the ESLint configuration
+### 👤 Perfil de Usuario
+- Visualización de datos personales
+- Edición de perfil (nombre, email, dirección, teléfono)
+- Actualización de foto de perfil
+- Validación de formularios con Formik + Yup
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 👥 Panel de Administrador
+- Listado completo de usuarios
+- Búsqueda y filtrado por nombre/email
+- Cambio de roles (USER / ADMIN)
+- Bloqueo/Desbloqueo de cuentas
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🎨 Diseño
+- UI Neumórfica
+- Diseño responsive
+- Animaciones y transiciones
+- Componentes con React Bootstrap
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🛠️ Tecnologías
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Tecnología | Propósito |
+|------------|-----------|
+| React 18 | Biblioteca principal |
+| TypeScript | Tipado estático |
+| Vite | Build tool |
+| React Bootstrap | Componentes UI |
+| React Router DOM | Navegación |
+| Axios | Cliente HTTP |
+| Formik + Yup | Formularios y validación |
+
+## 📁 Estructura
+
+```
+src/
+├── components/     # Navbar, Footer, Carousel, UserList
+├── contexts/       # Context API (autenticación)
+├── pages/          # Home, Login, Register, Profile, Admin, 401, 404
+├── interface/      # Tipos TypeScript
+├── enum/           # Enumeradores (Roles)
+├── services/       # Configuración de API
+└── reducers/       # Reducers de autenticación
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 👥 Roles
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Rol | Permisos |
+|-----|----------|
+| **ADMIN** | Lista de usuarios, cambiar roles, bloquear/desbloquear |
+| **USER** | Ver y editar su propio perfil |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🔧 Instalación
+
+```bash
+git clone https://github.com/Palavesino/Authentication-Frontend
+cd Authentication-Frontend
+npm install
+npm run dev
 ```
+
+### Variables de Entorno
+
+```env
+VITE_API_URL=https://tu-backend.com/api
+```
+
+
+## 🧪 Usuarios de Prueba
+
+| Email | Contraseña | Rol |
+|-------|------------|-----|
+| usuario2@gmail.com | 123456 | USER |
+| Admin1@gmail.com | 123456 | ADMIN |
+
+## 🚀 Deploy
+
+Desplegado en Vercel: [https://authentication-front-end.vercel.app/](https://authentication-front-end.vercel.app/)
+
+## 📦 Dependencias
+
+```json
+{
+  "react": "^18.2.0",
+  "react-bootstrap": "^2.10.0",
+  "react-router-dom": "^6.22.0",
+  "axios": "^1.6.0",
+  "formik": "^2.4.0",
+  "yup": "^1.4.0",
+  "typescript": "^5.0.0",
+  "vite": "^5.0.0"
+}
+```
+
+## 👨‍💻 Autor
+
+**Palavesino** - [GitHub](https://github.com/Palavesino)
+
+## 🔗 Repositorios
+
+- [Frontend](https://github.com/Palavesino/Authentication-Frontend)
+- [Backend](https://github.com/Palavesino/Authentication-Middleware)
+
+---
+
+⭐ Si te gustó el proyecto, ¡no olvides darle una estrella!
